@@ -1,0 +1,16 @@
+﻿version: "3"
+services:
+  insurancewebapi:
+    build: .
+    ports:
+      - "80:80"
+    depends_on:
+      - insurancedb
+  insurancedb:
+    image: "mcr.microsoft.com/mssql/server:2017-latest-ubuntu"
+    environment:
+      SA_PASSWORD: "Pa55w0rd2020"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: Express
+    ports:
+      - "1433:1433"
