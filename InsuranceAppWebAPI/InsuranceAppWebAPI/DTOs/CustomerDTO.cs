@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace InsuranceAppWebAPI.DTOs
@@ -16,5 +17,7 @@ namespace InsuranceAppWebAPI.DTOs
         public string Email { get; set; }
         public string Phone { get; set; }
         public string Address { get; set; }
+
+        public ICollection<PolicyDTO> Policies { get; set; }
     }
 }

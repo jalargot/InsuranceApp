@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace InsuranceAppWebAPI.Models
 {
@@ -21,7 +22,7 @@ namespace InsuranceAppWebAPI.Models
         public double Price { get; set; }
         [Required]
         public RiskType RiskType { get; set; }
-
+        [ForeignKey("Customer")]
         public int? CustomerId { get; set; }
         public Customer Customer { get; set; }
     }

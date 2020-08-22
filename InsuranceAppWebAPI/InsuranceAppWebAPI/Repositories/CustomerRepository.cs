@@ -18,7 +18,7 @@ namespace InsuranceAppWebAPI.Repositories
 
         public async Task<List<Customer>> GetCustomers()
         {
-            return await _context.Customers.ToListAsync();
+            return await _context.Customers.Include(policy => policy.Policies).ToListAsync();
         }
 
         public async Task<Customer> GetCustomerById(int id)

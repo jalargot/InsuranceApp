@@ -112,6 +112,32 @@ namespace InsuranceAppWebAPI.Migrations
                     b.HasIndex("CustomerId");
 
                     b.ToTable("Policies");
+
+                    b.HasData(
+                        new
+                        {
+                            PolicyId = 1,
+                            Coverage = 70,
+                            CustomerId = 1,
+                            Description = "Description1",
+                            Duration = 12,
+                            Name = "Name1",
+                            Price = 1200000.0,
+                            RiskType = 2,
+                            StartDate = new DateTime(2020, 8, 22, 16, 48, 8, 668, DateTimeKind.Local).AddTicks(1562)
+                        },
+                        new
+                        {
+                            PolicyId = 2,
+                            Coverage = 40,
+                            CustomerId = 2,
+                            Description = "Description2",
+                            Duration = 24,
+                            Name = "Name2",
+                            Price = 4000000.0,
+                            RiskType = 3,
+                            StartDate = new DateTime(2020, 8, 22, 16, 48, 8, 669, DateTimeKind.Local).AddTicks(4708)
+                        });
                 });
 
             modelBuilder.Entity("InsuranceAppWebAPI.Models.Policy", b =>

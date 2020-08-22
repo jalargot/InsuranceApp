@@ -22,5 +22,9 @@ namespace InsuranceAppWebAPI.DTOs
         public double Price { get; set; }
         [Required]
         public RiskType RiskType { get; set; }
+
+        public int? CustomerId { get; set; }
+        // removed because is causing a loop
+        // public CustomerDTO Customer { get; set; }
     }
 }

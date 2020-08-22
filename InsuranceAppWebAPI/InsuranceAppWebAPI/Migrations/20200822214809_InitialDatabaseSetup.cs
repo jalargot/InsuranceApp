@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace InsuranceAppWebAPI.Migrations
 {
-    public partial class InitialDBSetup : Migration
+    public partial class InitialDatabaseSetup : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -60,6 +60,16 @@ namespace InsuranceAppWebAPI.Migrations
                 table: "Customers",
                 columns: new[] { "CustomerId", "Address", "DocNumber", "Email", "FirstName", "LastName", "Phone" },
                 values: new object[] { 2, "123 death star avenue", "2143658709", "pricess@email.com", "Leia", "Skywalker", "896745231" });
+
+            migrationBuilder.InsertData(
+                table: "Policies",
+                columns: new[] { "PolicyId", "Coverage", "CustomerId", "Description", "Duration", "Name", "Price", "RiskType", "StartDate" },
+                values: new object[] { 1, 70, 1, "Description1", 12, "Name1", 1200000.0, 2, new DateTime(2020, 8, 22, 16, 48, 8, 668, DateTimeKind.Local).AddTicks(1562) });
+
+            migrationBuilder.InsertData(
+                table: "Policies",
+                columns: new[] { "PolicyId", "Coverage", "CustomerId", "Description", "Duration", "Name", "Price", "RiskType", "StartDate" },
+                values: new object[] { 2, 40, 2, "Description2", 24, "Name2", 4000000.0, 3, new DateTime(2020, 8, 22, 16, 48, 8, 669, DateTimeKind.Local).AddTicks(4708) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Policies_CustomerId",

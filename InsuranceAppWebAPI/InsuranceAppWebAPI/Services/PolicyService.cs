@@ -49,6 +49,12 @@ namespace InsuranceAppWebAPI.Services
         {
             try
             {
+                PolicyRule policyRule = new PolicyRule(policieDTO.Coverage, policieDTO.RiskType);
+                var validation = policyRule.Validate();
+                if (validation!=null)
+                {
+                    return 0;
+                }
                 var policie = _mapper.Map<Policy>(policieDTO);
                 return await _policyRepository.InsertPolicy(policie);
             }
@@ -62,6 +68,12 @@ namespace InsuranceAppWebAPI.Services
         {
             try
             {
+                PolicyRule policyRule = new PolicyRule(policieDTO.Coverage, policieDTO.RiskType);
+                var validation = policyRule.Validate();
+                if (validation != null)
+                {
+                    return false;
+                }
                 var policie = _mapper.Map<Policy>(policieDTO);
                 return await _policyRepository.UpdatePolicy(policie);
             }
