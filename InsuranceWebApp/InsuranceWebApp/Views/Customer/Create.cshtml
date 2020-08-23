@@ -1,5 +1,101 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model InsuranceWebApp.Models.CustomerCreatePageModel
 @{
+    ViewData["Title"] = "Create Customer";
+}
+
+<br />
+<h2 class="text-info">Create New Customer</h2>
+<div class="border">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="container" style="padding:30px;">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label asp-for="Customer.DocNumber"></label>
+                    </div>
+                    <div class="col-sm-4">
+                        <input asp-for="Customer.DocNumber" class="form-control" />
+                    </div>
+                    <span asp-validation-for="Customer.DocNumber" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label asp-for="Customer.FirstName"></label>
+                    </div>
+                    <div class="col-sm-4">
+                        <input asp-for="Customer.FirstName" class="form-control" />
+                    </div>
+                    <span asp-validation-for="Customer.FirstName" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label asp-for="Customer.LastName"></label>
+                    </div>
+                    <div class="col-sm-4">
+                        <input asp-for="Customer.LastName" class="form-control" />
+                    </div>
+                    <span asp-validation-for="Customer.LastName" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label asp-for="Customer.Email"></label>
+                    </div>
+                    <div class="col-sm-4">
+                        <input asp-for="Customer.Email" class="form-control" />
+                    </div>
+                    <span asp-validation-for="Customer.Email" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label asp-for="Customer.Phone"></label>
+                    </div>
+                    <div class="col-sm-4">
+                        <input asp-for="Customer.Phone" class="form-control" />
+                    </div>
+                    <span asp-validation-for="Customer.Phone" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label asp-for="Customer.Address"></label>
+                    </div>
+                    <div class="col-sm-4">
+                        <input asp-for="Customer.Address" class="form-control" />
+                    </div>
+                    <span asp-validation-for="Customer.Address" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-2 offset-sm-2">
+                        <input type="submit" value="Create" class="btn btn-primary form-control" />
+                    </div>
+                    <div class="col-sm-2">
+                        <a asp-area="" asp-controller="Customer" asp-action="Back" class="btn btn-success form-control">Back</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+@section Scripts{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

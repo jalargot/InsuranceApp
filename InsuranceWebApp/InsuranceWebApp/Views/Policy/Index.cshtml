@@ -1,0 +1,109 @@
+﻿@model InsuranceWebApp.Models.PolicyViewPageModel
+@{
+    ViewData["Title"] = "Policies";
+}
+
+<br />
+
+<div class="container row">
+    <div class="col-6">
+        <h2 class="text-info">Policies</h2>
+    </div>
+    <div class="col-6 text-right">
+        <a asp-area="" asp-controller="Policy" asp-action="Create" class="btn btn-primary">Create New Policy</a>
+    </div>
+</div>
+
+@if (Model.Message != null)
+{
+    <div class="alert alert-info alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        @Model.Message
+    </div>
+}
+
+<form method="post">
+    @if (Model.Policies.Count() > 0)
+    {
+        <br />
+        <br />
+        <table class="table table-striped border">
+            <tr class="table-secondary">
+                <th>
+                    @Html.DisplayNameFor(m => m.Policies.FirstOrDefault().PolicyId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.Policies.FirstOrDefault().Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.Policies.FirstOrDefault().Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.Policies.FirstOrDefault().Coverage)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.Policies.FirstOrDefault().StartDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.Policies.FirstOrDefault().Duration)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.Policies.FirstOrDefault().Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.Policies.FirstOrDefault().RiskType)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.Policies.FirstOrDefault().CustomerId)
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+            @foreach (var policy in Model.Policies)
+            {
+        <tr>
+            <td>
+                @Html.DisplayFor(m => policy.PolicyId)
+            </td>
+            <td>
+                @Html.DisplayFor(m => policy.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(m => policy.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(m => policy.Coverage)
+            </td>
+            <td>
+                @Html.DisplayFor(m => policy.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(m => policy.Duration)
+            </td>
+            <td>
+                @Html.DisplayFor(m => policy.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(m => policy.RiskType)
+            </td>
+            <td>
+                @Html.DisplayFor(m => policy.CustomerId)
+            </td>
+            <td>
+                <a asp-route-id="@policy.PolicyId" asp-area="" asp-controller="Policy" asp-action="Edit" class="btn btn-success btn-sm">Edit</a>
+                <button asp-area="" asp-controller="Policy" asp-action="Delete" asp-route-id="@policy.PolicyId" onclick="return confirm('Are you sure that you want to delete this policy?')" class="btn btn-danger btn-sm">Delete</button>
+            </td>
+        </tr>
+            }
+
+        </table>
+    }
+    else
+    {
+        <br />
+        <p>No Policies Available.</p>
+    }
+</form>

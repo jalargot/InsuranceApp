@@ -10,7 +10,7 @@
         <h2 class="text-info">Customers</h2>
     </div>
     <div class="col-6 text-right">
-        <a asp-page="/Create" class="btn btn-primary">Create New Customer</a>
+        <a asp-area="" asp-controller="Customer" asp-action="Create" class="btn btn-primary">Create New Customer</a>
     </div>
 </div>
 
@@ -53,6 +53,9 @@
                     @Html.DisplayNameFor(m => m.Customers.FirstOrDefault().Address)
                 </th>
                 <th>
+                    Policies
+                </th>
+                <th>
                     Actions
                 </th>
             </tr>
@@ -81,8 +84,11 @@
                 @Html.DisplayFor(m => customer.Address)
             </td>
             <td>
-                <a asp-route-id="@customer.CustomerId" asp-page="/Edit" class="btn btn-success btn-sm">Edit</a>
-                <button asp-page-handler="Delete" asp-route-id="@customer.CustomerId" onclick="return confirm('Are you sure that you want to delete this customer?')" class="btn btn-danger btn-sm">Borrar</button>
+                <a asp-route-id="@customer.CustomerId" asp-area="" asp-controller="Customer" asp-action="Details" class="btn btn-success btn-sm">Details</a>
+            </td>
+            <td>
+                <a asp-route-id="@customer.CustomerId" asp-area="" asp-controller="Customer" asp-action="Edit" class="btn btn-success btn-sm">Edit</a>
+                <button asp-area="" asp-controller="Customer" asp-action="Delete" asp-route-id="@customer.CustomerId" onclick="return confirm('Are you sure that you want to delete this customer?')" class="btn btn-danger btn-sm">Delete</button>
             </td>
         </tr>
             }
