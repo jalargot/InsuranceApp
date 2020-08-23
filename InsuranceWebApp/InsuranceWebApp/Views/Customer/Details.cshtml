@@ -1,0 +1,172 @@
+﻿@model InsuranceWebApp.Models.CustomerViewModel
+@{
+    ViewData["Title"] = "Customer Details";
+}
+
+<br />
+<h2 class="text-info">Customer Details</h2>
+<div class="border">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="CustomerId" />
+        <div class="container" style="padding:30px;">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label asp-for="DocNumber"></label>
+                    </div>
+                    <div class="col-sm-4">
+                        <input asp-for="DocNumber" class="form-control" />
+                    </div>
+                    <span asp-validation-for="DocNumber" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label asp-for="FirstName"></label>
+                    </div>
+                    <div class="col-sm-4">
+                        <input asp-for="FirstName" class="form-control" />
+                    </div>
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label asp-for="LastName"></label>
+                    </div>
+                    <div class="col-sm-4">
+                        <input asp-for="LastName" class="form-control" />
+                    </div>
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label asp-for="Email"></label>
+                    </div>
+                    <div class="col-sm-4">
+                        <input asp-for="Email" class="form-control" />
+                    </div>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label asp-for="Phone"></label>
+                    </div>
+                    <div class="col-sm-4">
+                        <input asp-for="Phone" class="form-control" />
+                    </div>
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label asp-for="Address"></label>
+                    </div>
+                    <div class="col-sm-4">
+                        <input asp-for="Address" class="form-control" />
+                    </div>
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+            </div>
+
+            @if (Model.Policies.Count() > 0)
+            {
+                <br />
+                <table class="table table-striped border">
+                    <tr class="table-secondary">
+                        <th>
+                            @Html.DisplayNameFor(m => m.Policies.FirstOrDefault().PolicyId)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.Policies.FirstOrDefault().Name)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.Policies.FirstOrDefault().Description)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.Policies.FirstOrDefault().Coverage)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.Policies.FirstOrDefault().StartDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.Policies.FirstOrDefault().Duration)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.Policies.FirstOrDefault().Price)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.Policies.FirstOrDefault().RiskType)
+                        </th>
+                    </tr>
+                    @foreach (var policy in Model.Policies)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(m => policy.PolicyId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => policy.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => policy.Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => policy.Coverage)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => policy.StartDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => policy.Duration)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => policy.Price)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => policy.RiskType)
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            }
+            else
+            {
+                <br />
+                <p>No Policies Available.</p>
+            }
+
+
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-2 offset-sm-2">
+                        <input type="submit" value="Save" class="btn btn-primary form-control" />
+                    </div>
+                    <div class="col-sm-2">
+                        <a asp-area="" asp-controller="Customer" asp-action="Back" class="btn btn-success form-control">Back</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+@section Scripts{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

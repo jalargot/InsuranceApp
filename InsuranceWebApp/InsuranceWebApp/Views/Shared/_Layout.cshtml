@@ -18,16 +18,13 @@
                 </button>
                 <div class="navbar-collapse collapse ">
                     <ul class="nav navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Index">Customers</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Back">Customers</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Policy" asp-action="Index">Policies</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Policy" asp-action="Back">Policies</a>
                             </li>
                         }
                     </ul>
