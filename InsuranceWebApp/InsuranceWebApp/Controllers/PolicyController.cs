@@ -32,7 +32,8 @@ namespace InsuranceWebApp.Controllers
 
 		public IActionResult Create()
 		{
-			return View();
+			PolicyCreatePageModel emptyModel = new PolicyCreatePageModel();
+			return View(emptyModel);
 		}
 
 		[HttpPost]
@@ -45,6 +46,11 @@ namespace InsuranceWebApp.Controllers
                     StringContent content = new StringContent(JsonConvert.SerializeObject(createModel.Policy), Encoding.UTF8, "application/json");
                     await SetupAuthorizationHeader();
                     var response = await Client.PostAsync("https://localhost:44383/api/policies", content);
+					if (response.StatusCode == System.Net.HttpStatusCode.UnprocessableEntity)
+                    {
+						createModel.Message = "if Risk Type is High Coverage should be less than 50%";
+						return View(createModel);
+					}
                     response.EnsureSuccessStatusCode();
                     model.Message = "The policy has been created successfully";
                     return RedirectToAction("Index");
@@ -78,6 +84,11 @@ namespace InsuranceWebApp.Controllers
 					StringContent content = new StringContent(JsonConvert.SerializeObject(editedModel.Policy), Encoding.UTF8, "application/json");
 					await SetupAuthorizationHeader();
 					var response = await Client.PutAsync("https://localhost:44383/api/policies/"+id, content);
+					if (response.StatusCode == System.Net.HttpStatusCode.UnprocessableEntity)
+					{
+						editedModel.Message = "if Risk Type is High Coverage should be less than 50%";
+						return View(editedModel);
+					}
 					response.EnsureSuccessStatusCode();
 					model.Message = "The policy has been edited successfully";
 					return RedirectToAction("Index");

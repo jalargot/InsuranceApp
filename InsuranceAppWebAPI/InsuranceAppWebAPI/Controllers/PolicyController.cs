@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using InsuranceAppWebAPI.DTOs;
+using InsuranceAppWebAPI.Exceptions;
 using InsuranceAppWebAPI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -68,6 +69,7 @@ namespace InsuranceAppWebAPI.Controllers
         /// <response code="400">If the id is different to the policyId</response>
         /// <response code="404">If the policy is not found</response>
         /// <response code="409">If there is a problem updating the policy</response>
+        /// <response code="422">If the entity is breaking the business rules</response> 
         [HttpPut("{id}")]
         [Authorize]
         [Consumes(MediaTypeNames.Application.Json)]
@@ -75,31 +77,40 @@ namespace InsuranceAppWebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         public async Task<ActionResult> PutPolicy(int id, PolicyDTO policyDTO)
         {
-            // According to the HTTP specification, a PUT request requires
-            // the client to send the entire updated entity, not just the changes.
-            // To support partial updates, implements HTTP PATCH
-
-            if (id != policyDTO.PolicyId)
+            try
             {
-                return BadRequest();
+                // According to the HTTP specification, a PUT request requires
+                // the client to send the entire updated entity, not just the changes.
+                // To support partial updates, implements HTTP PATCH
+
+                if (id != policyDTO.PolicyId)
+                {
+                    return BadRequest();
+                }
+
+                var policyExists = await _policyService.PolicyExists(id);
+
+                if (!policyExists)
+                {
+                    return NotFound();
+                }
+
+                var status = await _policyService.UpdatePolicy(policyDTO);
+                if (!status)
+                {
+                    return Conflict();
+                }
+
+                return Ok();
             }
-
-            var policyExists = await _policyService.PolicyExists(id);
-
-            if (!policyExists)
+            catch (BusinessRuleException)
             {
-                return NotFound();
+                return UnprocessableEntity();
             }
-
-            var status = await _policyService.UpdatePolicy(policyDTO);
-            if (!status)
-            {
-                return Conflict();
-            }
-
-            return Ok();
+            
         }
 
         /// <summary>
@@ -109,20 +120,30 @@ namespace InsuranceAppWebAPI.Controllers
         /// <returns>A newly created policy</returns>
         /// <response code="201">Returns the newly created policy</response>
         /// <response code="409">If there is a problem updating the policy</response> 
+        /// <response code="422">If the entity is breaking the business rules</response> 
         [HttpPost]
         [Authorize]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         public async Task<ActionResult<PolicyDTO>> PostPolicy(PolicyDTO policyDTO)
         {
-            var id = await _policyService.InsertPolicy(policyDTO);
-            if (id == 0)
+            try
             {
-                return Conflict();
-            }
+                var id = await _policyService.InsertPolicy(policyDTO);
+                if (id == 0)
+                {
+                    return Conflict();
+                }
 
-            return CreatedAtAction(nameof(GetPolicy), new { id }, policyDTO);
+                return CreatedAtAction(nameof(GetPolicy), new { id }, policyDTO);
+            }
+            catch (BusinessRuleException)
+            {
+                return UnprocessableEntity();
+            }
+            
         }
 
         /// <summary>

@@ -3,6 +3,7 @@ using InsuranceAppWebAPI.DTOs;
 using InsuranceAppWebAPI.Exceptions;
 using InsuranceAppWebAPI.Models;
 using InsuranceAppWebAPI.Repositories;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,7 +54,7 @@ namespace InsuranceAppWebAPI.Services
                 var validation = policyRule.Validate();
                 if (validation!=null)
                 {
-                    return 0;
+                    throw new BusinessRuleException(validation);
                 }
                 var policie = _mapper.Map<Policy>(policieDTO);
                 return await _policyRepository.InsertPolicy(policie);
@@ -72,7 +73,7 @@ namespace InsuranceAppWebAPI.Services
                 var validation = policyRule.Validate();
                 if (validation != null)
                 {
-                    return false;
+                    throw new BusinessRuleException(validation);
                 }
                 var policie = _mapper.Map<Policy>(policieDTO);
                 return await _policyRepository.UpdatePolicy(policie);

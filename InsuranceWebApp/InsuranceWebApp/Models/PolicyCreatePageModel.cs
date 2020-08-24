@@ -11,5 +11,8 @@ namespace InsuranceWebApp.Models
         [BindProperty]
         public PolicyViewModel Policy { get; set; }
 
+        [TempData]
+        public string Message { get; set; }
+
     }
 }
